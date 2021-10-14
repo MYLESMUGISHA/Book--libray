@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 // Book Class: Represents a Book
+=======
+
+
+//Book class: represents a book
+>>>>>>> 3658a22e02c5dd6693ffa7c6735b96e613bc2afa
 class Book {
   constructor(title, author, isbn) {
     this.title = title;
@@ -7,6 +13,7 @@ class Book {
   }
 }
 
+<<<<<<< HEAD
 // UI Class: Handle UI Tasks
 class UI {
   static displayBooks() {
@@ -14,6 +21,41 @@ class UI {
 
     books.forEach((book) => UI.addBookToList(book));
   }
+=======
+
+
+
+
+// UI Class: Handle UI tasks.
+class UI {
+static displayBooks(){
+    const books = Store.getBooks();
+
+    books.forEach((book) => UI.addBookToList(book));
+
+}
+
+    // Add a book
+    static addBookToList(book) {
+
+        const list = document.querySelector('#book-list');
+
+        const row = document.createElement('tr');
+
+        row.innerHTML = `<td>${book.title}</td>
+                <td>${book.author}</td>
+                <td>${book.isbn}</td>
+                <td>
+                <a href="#" class="btn-danger btn-sm delete">X</a>
+                </td>`;
+
+        list.appendChild(row);
+    }
+
+
+
+    //Deleting a book
+>>>>>>> 3658a22e02c5dd6693ffa7c6735b96e613bc2afa
 
   static addBookToList(book) {
     const list = document.querySelector("#book-list");
@@ -55,6 +97,7 @@ class UI {
   }
 }
 
+<<<<<<< HEAD
 // Store Class: Handles Storage
 class Store {
   static getBooks() {
@@ -63,16 +106,38 @@ class Store {
       books = [];
     } else {
       books = JSON.parse(localStorage.getItem("books"));
+=======
+
+
+    //clear  form Method 
+
+    static clearFormFields() {
+        const title = document.getElementById('title').value = ' ';
+        const author = document.getElementById('author').value = ' ';
+        const isbn = document.getElementById('isbn').value = ' ';
+>>>>>>> 3658a22e02c5dd6693ffa7c6735b96e613bc2afa
     }
 
     return books;
   }
 
+<<<<<<< HEAD
   static addBook(book) {
     const books = Store.getBooks();
     books.push(book);
     localStorage.setItem("books", JSON.stringify(books));
   }
+=======
+
+    
+    // showing the alert 
+
+    static showAlertMessage(message, className) {
+
+        const div = document.createElement('div');
+        div.className = `alert alert-${className}`;
+        div.appendChild(document.createTextNode(message));
+>>>>>>> 3658a22e02c5dd6693ffa7c6735b96e613bc2afa
 
   static removeBook(isbn) {
     const books = Store.getBooks();
@@ -87,8 +152,48 @@ class Store {
   }
 }
 
+<<<<<<< HEAD
 // Event: Display Books
 document.addEventListener("DOMContentLoaded", UI.displayBooks);
+=======
+class Store {
+
+    static getBooks(){
+let books
+if(localStorage.getItem("books") === null){
+    books= []
+}
+else {
+    books =JSON.parse(localStorage.getItem("books"))
+}
+return books
+    }
+    
+    static addBook(book){
+        let books = Store.getBooks()
+        books.push(book)
+        // let BookInformation =JSON.stringify(books)
+        localStorage.setItem("books",JSON.stringify(books))
+        
+
+    }
+   static removeBooks(isbn){
+books= Store.getBooks();
+books.forEach((book, index) => {
+    if(book.isbn === isbn){
+        books.splice(index, 1)
+    }
+})
+localStorage.setItem("books",JSON.stringify(books))
+    }
+}
+
+
+document.querySelector('#book-form').addEventListener('submit', (e) => {
+
+    //prevent default
+    e.preventDefault();
+>>>>>>> 3658a22e02c5dd6693ffa7c6735b96e613bc2afa
 
 // Event: Add a Book
 document.querySelector("#book-form").addEventListener("submit", (e) => {
@@ -110,8 +215,20 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
     // Add Book to UI
     UI.addBookToList(book);
 
+<<<<<<< HEAD
     // Add book to store
     Store.addBook(book);
+=======
+    Store.addBook(book);
+
+  
+
+    UI.clearFormFields();
+
+    UI.showAlertMessage('Book Added', 'info');
+
+})
+>>>>>>> 3658a22e02c5dd6693ffa7c6735b96e613bc2afa
 
     // Show success message
     UI.showAlert("Book Added", "success");
@@ -129,6 +246,13 @@ document.querySelector("#book-list").addEventListener("click", (e) => {
   // Remove book from store
   Store.removeBook(e.target.parentElement.previousElementSibling.textContent);
 
+<<<<<<< HEAD
   // Show success message
   UI.showAlert("Book Removed", "success");
 });
+=======
+    UI.showAlertMessage('Book Deleted', 'danger');
+})
+
+
+>>>>>>> 3658a22e02c5dd6693ffa7c6735b96e613bc2afa
