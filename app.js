@@ -1,3 +1,5 @@
+
+
 //Book class: represents a book
 class Book {
     constructor(title, author, isbn) {
@@ -8,8 +10,17 @@ class Book {
 }
 
 
+
+
+
 // UI Class: Handle UI tasks.
 class UI {
+static displayBooks(){
+    const books = Store.getBooks();
+
+    books.forEach((book) => UI.addBookToList(book));
+
+}
 
     // Add a book
     static addBookToList(book) {
@@ -28,6 +39,8 @@ class UI {
         list.appendChild(row);
     }
 
+
+
     //Deleting a book
 
     static deleteBook(el) {
@@ -40,6 +53,8 @@ class UI {
 
     }
 
+
+
     //clear  form Method 
 
     static clearFormFields() {
@@ -49,6 +64,8 @@ class UI {
     }
 
 
+
+    
     // showing the alert 
 
     static showAlertMessage(message, className) {
@@ -81,6 +98,39 @@ class UI {
     }
 }
 
+class Store {
+
+    static getBooks(){
+let books
+if(localStorage.getItem("books") === null){
+    books= []
+}
+else {
+    books =JSON.parse(localStorage.getItem("books"))
+}
+return books
+    }
+    
+    static addBook(book){
+        let books = Store.getBooks()
+        books.push(book)
+        // let BookInformation =JSON.stringify(books)
+        localStorage.setItem("books",JSON.stringify(books))
+        
+
+    }
+   static removeBooks(isbn){
+books= Store.getBooks();
+books.forEach((book, index) => {
+    if(book.isbn === isbn){
+        books.splice(index, 1)
+    }
+})
+localStorage.setItem("books",JSON.stringify(books))
+    }
+}
+
+
 document.querySelector('#book-form').addEventListener('submit', (e) => {
 
     //prevent default
@@ -100,6 +150,10 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
 
     UI.addBookToList(book);
 
+    Store.addBook(book);
+
+  
+
     UI.clearFormFields();
 
     UI.showAlertMessage('Book Added', 'info');
@@ -116,3 +170,5 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
 
     UI.showAlertMessage('Book Deleted', 'danger');
 })
+
+
